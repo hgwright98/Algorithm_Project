@@ -1,33 +1,44 @@
-#Part 2: Test with Random Numbers
+#Part 3: Measure and Compare Runtime Growth
 import random
+import time
 from algorithms import recursive_binary_search, iterative_binary_search, sequential_search
 
 
-#This generates 20 random numbers between 1 and 100
-arr = [random.randint(1, 100) for _ in range(20)]
-#This sorts the array to prepare it for binary search algorithms.
-arr.sort()
+#This section measures and compares the runtime of three search algorithms: recursive binary search, iterative binary search, and sequential search. It generates sorted arrays of varying sizes, performs each search multiple times, and calculates the average runtime for each algorithm.
+data_sizes = [5000, 50000, 100000, 150000, 1000000]
 
 
-#This randomly selects a target value from the array or a value not in the array (e.g., 999) to test both found and not found scenarios with a 50% chance for each.
-target = random.choice(arr) if random.random() < 0.5 else 999
+#This loop iterates over different sizes of data to test the performance of each search algorithm.
+for N in data_sizes:
+    #This initializes total time counters for each search algorithm.
+    total_rbs = total_ibs = total_seq = 0
 
 
-# his prints the sorted array and the target value for reference.
-print("Sorted Array:", arr)
-print("Target:", target)
+    #This inner loop runs the search tests multiple times to get an average runtime for each algorithm.
+    for _ in range(10):  #This repeats 10 times for average
+        arr = sorted([random.randint(1, 1_000_000) for _ in range(N)]) #This generates a sorted array of N random integers.
+        target = random.randint(1, 1_000_000) #This selects a random target value to search for in the array.
 
 
-#This tests the recursive binary search function and prints the result.
-index = recursive_binary_search(arr, target, 0, len(arr) - 1)
-print(f"Recursive Binary Search: {target} {'found at index ' + str(index) if index != -1 else 'not found'}")
+        #This is the Recursive Binary Search
+        start = time.perf_counter() #This records the start time of the search.
+        recursive_binary_search(arr, target, 0, len(arr) - 1) #This performs the recursive binary search.
+        total_rbs += (time.perf_counter() - start) * 1_000_000 #This calculates the elapsed time in microseconds and adds it to the total.
 
 
-#This tests the iterative binary search function and prints the result.
-index = iterative_binary_search(arr, target)
-print(f"Iterative Binary Search: {target} {'found at index ' + str(index) if index != -1 else 'not found'}")
+        #This is the Iterative Binary Search
+        start = time.perf_counter() #This records the start time of the search.
+        iterative_binary_search(arr, target) #This performs the iterative binary search.
+        total_ibs += (time.perf_counter() - start) * 1_000_000 #This calculates the elapsed time in microseconds and adds it to the total.
 
 
-#This tests the sequential search function and prints the result.
-index = sequential_search(arr, target)
-print(f"Sequential Search: {target} {'found at index ' + str(index) if index != -1 else 'not found'}")
+        #This is the Sequential Search
+        start = time.perf_counter() #This records the start time of the search.
+        sequential_search(arr, target) #This performs the sequential search.
+        total_seq += (time.perf_counter() - start) * 1_000_000 #This calculates the elapsed time in microseconds and adds it to the total.
+
+        #This prints average times for each algorithm
+    print(f"\nN = {N}")
+    print(f"Average Recursive Binary Search time: {total_rbs / 10:.2f} μs")
+    print(f"Average Iterative Binary Search time: {total_ibs / 10:.2f} μs")
+    print(f"Average Sequential Search time: {total_seq / 10:.2f} μs")
