@@ -12,14 +12,14 @@ target2 = 9   # This is the target that is not present in the array
 
 #This tests each search algorithm with both targets and prints the results
 for target in [target1, target2]:
-   #This prints the target being searched for as a title
-   print("\nTarget:", target)
-   #This tests the recursive binary search
-   index = recursive_binary_search(arr, target, 0, len(arr) - 1)
-   print(f"Recursive Binary Search: {target} {'found at index ' + str(index) if index != -1 else 'not found'}")
-   #This tests the iterative binary search
-   index = iterative_binary_search(arr, target)
-   print(f"Iterative Binary Search: {target} {'found at index ' + str(index) if index != -1 else 'not found'}")
-   #This tests the sequential search
-   index = sequential_search(arr, target)
-   print(f"Sequential Search: {target} {'found at index ' + str(index) if index != -1 else 'not found'}")
+    #This prints the target being searched for as a title
+    print("\nTarget:", target)
+    #This tests the recursive binary search
+    index = recursive_binary_search(arr, target, 0, len(arr) - 1)
+    print(f"Recursive Binary Search: {target} {'found at index ' + str(index) if index != -1 else 'not found'}")
+    #This tests the iterative binary search
+    index = iterative_binary_search(arr, target)
+    print(f"Iterative Binary Search: {target} {'found at index ' + str(index) if index != -1 else 'not found'}")
+    #This tests the sequential search
+    index = sequential_search(arr, target)
+    print(f"Sequential Search: {target} {'found at index ' + str(index) if index != -1 else 'not found'}")
